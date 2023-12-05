@@ -419,7 +419,7 @@ bool SystemExec(const char *szFormatCmd, ...)
 		return false;
 	}
 
-	int status = system(szCmd);
+	int status = 0;
 
 	if (-1 == status)
 	{
