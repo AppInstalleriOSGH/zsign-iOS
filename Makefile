@@ -24,7 +24,7 @@ TESTS_DIR := build/tests
 STATIC_LIB := $(LIB_DIR)/$(LIB_NAME).a
 DYNAMIC_LIB := $(LIB_DIR)/$(LIB_NAME).dylib
 
-SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
+SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/common/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
 
 TESTS_SUBDIRS := $(wildcard $(TESTS_SRC_DIR)/*)
