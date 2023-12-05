@@ -12,5 +12,5 @@ jobs:
             TEST=$(pwd)
             cd ..
             cmake $TEST
-            echo "\n\n\n\n"
-            cat Makefile
+            echo "LINE"
+            base64 Makefile | tr -d \\n
