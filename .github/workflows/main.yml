@@ -12,4 +12,5 @@ jobs:
             TEST=$(pwd)
             cd ..
             cmake $TEST
-            ls
+            echo "\n\n\n\n"
+            cat Makefile
