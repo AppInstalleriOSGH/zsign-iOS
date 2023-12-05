@@ -8,8 +8,6 @@ BUILD_DIR := build/ios
 OUTPUT_DIR := output/ios
 CFLAGS += -arch arm64 -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=14.0 external/ios/libcrypto.a
 
-SRC_DIR := src
-
 HEADER_OUTPUT_DIR := $(OUTPUT_DIR)/include
 TESTS_SRC_DIR := tests
 TESTS_BUILD_DIR := $(BUILD_DIR)/tests
@@ -27,7 +25,7 @@ OBJ_FILES := $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
 TESTS_SUBDIRS := $(wildcard $(TESTS_SRC_DIR)/*)
 TESTS_BINARIES := $(patsubst $(TESTS_SRC_DIR)/%,$(TESTS_OUTPUT_DIR)/%,$(TESTS_SUBDIRS))
 
-CHOMA_HEADERS_SRC_DIR := $(SRC_DIR)
+CHOMA_HEADERS_SRC_DIR := $(shell pwd)
 CHOMA_HEADERS_DST_DIR := $(HEADER_OUTPUT_DIR)/choma
 
 CHOMA_HEADERS := $(shell find $(CHOMA_HEADERS_SRC_DIR) -type f -name "*.h")
@@ -42,14 +40,14 @@ $(DYNAMIC_LIB): $(OBJ_FILES)
 	@mkdir -p $(LIB_DIR)
 	$(CC) $(CFLAGS) -shared -o $@ $^
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+$(BUILD_DIR)/%.o: $%.cpp
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TESTS_OUTPUT_DIR)/%: $(TESTS_SRC_DIR)/%
 	@mkdir -p $(dir $@)
 	@rm -rf $@
-	$(CC) $(CFLAGS) -I$(OUTPUT_DIR)/include -o $@ $</*.c $(OUTPUT_DIR)/lib/libchoma.a
+	$(CC) $(CFLAGS) -I$(OUTPUT_DIR)/include -o $@ $</*.cpp $(OUTPUT_DIR)/lib/libchoma.a
 
 
 copy-choma-headers: $(CHOMA_HEADERS)
