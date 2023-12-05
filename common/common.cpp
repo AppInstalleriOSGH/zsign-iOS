@@ -410,6 +410,46 @@ uint64_t GetMicroSecond()
 	return tv.tv_sec * 1000000 + tv.tv_usec;
 }
 
+bool SystemExec(const char *szFormatCmd, ...)
+{
+	PARSEVALIST(szFormatCmd, szCmd)
+
+	if (strlen(szCmd) <= 0)
+	{
+		return false;
+	}
+
+	int status = system(szCmd);
+
+	if (-1 == status)
+	{
+		ZLog::ErrorV("SystemExec: \"%s\", Error!\n", szCmd);
+		return false;
+	}
+	else
+	{
+#if !defined(WINDOWS)
+		if (WIFEXITED(status))
+		{
+			if (0 == WEXITSTATUS(status))
+			{
+				return true;
+			}
+			else
+			{
+				ZLog::ErrorV("SystemExec: \"%s\", Failed! Exit-Status: %d\n", szCmd, WEXITSTATUS(status));
+				return false;
+			}
+		}
+		else
+		{
+			return true;
+		}
+#endif
+	}
+	return false;
+}
+
 uint16_t _Swap(uint16_t value)
 {
 	return ((value >> 8) & 0x00ff) |
