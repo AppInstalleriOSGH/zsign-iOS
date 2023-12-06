@@ -421,24 +421,7 @@ bool ZAppBundle::SignNode(JValue &jvNode)
 		}
 	}
 
-	string strCodeResData;
-	jvCodeRes.writePList(strCodeResData);
-	if (!WriteFile(strCodeResFile.c_str(), strCodeResData))
-	{
-		ZLog::ErrorV("\tWriting CodeResources Failed! %s\n", strCodeResFile.c_str());
-		return false;
-	}
-
-	bool bForceSign = m_bForceSign;
-	if ("/" == strFolder && !m_strDyLibPath.empty())
-	{ //inject dylib
-		macho.InjectDyLib(m_bWeakInject, m_strDyLibPath.c_str(), bForceSign);
-	}
-
-	if (!macho.Sign(m_pSignAsset, bForceSign, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResData))
-	{
-		return false;
-	}
+	
 
 	return true;
 }
