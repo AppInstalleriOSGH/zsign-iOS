@@ -3,7 +3,7 @@
 #include "openssl.h"
 #include "macho.h"
 #include "bundle.h"
-#include "zsign.h"
+#include "zsign.hpp"
 #include <libgen.h>
 #include <dirent.h>
 #include <getopt.h>
@@ -28,8 +28,6 @@ const struct option options[] = {
 	{"quiet", no_argument, NULL, 'q'},
 	{"help", no_argument, NULL, 'h'},
 	{}};
-
-extern "C" int zsign(int argc, char *argv[]);
 
 int zsign(int argc, char *argv[]) {
 	ZTimer gtimer;
