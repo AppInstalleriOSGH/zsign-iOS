@@ -434,7 +434,10 @@ bool ZAppBundle::SignNode(JValue &jvNode)
 	{ //inject dylib
 		macho.InjectDyLib(m_bWeakInject, m_strDyLibPath.c_str(), bForceSign);
 	}
-        printf("test\n");
+        if (!macho.Sign(m_pSignAsset, bForceSign, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResData))
+	{
+		return false;
+	}
 	return true;
 }
 
