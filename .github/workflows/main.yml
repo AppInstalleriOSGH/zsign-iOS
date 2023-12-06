@@ -9,8 +9,8 @@ jobs:
      - uses: actions/checkout@v3
      - name: Build App
        run: |
-            clang -c *.m -arch arm64 -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -lcrypto $(pkg-config --cflags libcrypto) -Lexternal/ios
-            clang++ -c *.cpp common/*.cpp -arch arm64 -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -lcrypto $(pkg-config --cflags libcrypto) -Lexternal/ios
+            clang -c *.m -arch arm64 -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -lcrypto $(pkg-config --cflags libcrypto) -Lexternal/ios -lstdc++
+            clang++ -c *.cpp common/*.cpp -arch arm64 -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -lcrypto $(pkg-config --cflags libcrypto) -Lexternal/ios -lstdc++
             ls
             ar rcs libzsign.a archo.o base64.o bundle.o common.o json.o macho.o openssl.o signing.o zsign.o test.o
      - name: Git Push
