@@ -17,6 +17,10 @@ public:
 		OpenSSL_add_all_algorithms();
 		ERR_load_crypto_strings();
 #endif
+# if OPENSSL_VERSION_NUMBER >= 0x30000000
+                OSSL_PROVIDER *legacy = OSSL_PROVIDER_load(NULL, "legacy");
+                OSSL_PROVIDER *deflt = OSSL_PROVIDER_load(NULL, "default");
+# endif
 	};
 };
 
