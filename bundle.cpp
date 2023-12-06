@@ -637,7 +637,17 @@ bool ZAppBundle::SignFolder(ZSignAsset *pSignAsset,
 			return false;
 		}
 		GetNodeChangedFiles(jvRoot);
+	} else {
+	    jvRoot.readPath("./.zsign_cache/%s.json", strCacheName.c_str());
 	}
+	
+	ZLog::PrintV(">>> Signing: \t%s ...\n", m_strAppFolder.c_str());
+	ZLog::PrintV(">>> AppName: \t%s\n", jvRoot["name"].asCString());
+	ZLog::PrintV(">>> BundleId: \t%s\n", jvRoot["bid"].asCString());
+	ZLog::PrintV(">>> BundleVer: \t%s\n", jvRoot["bver"].asCString());
+	ZLog::PrintV(">>> TeamId: \t%s\n", m_pSignAsset->m_strTeamId.c_str());
+	ZLog::PrintV(">>> SubjectCN: \t%s\n", m_pSignAsset->m_strSubjectCN.c_str());
+	ZLog::PrintV(">>> ReadCache: \t%s\n", m_bForceSign ? "NO" : "YES");
 
 	return false;
 }
