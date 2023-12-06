@@ -165,18 +165,18 @@ bool ZMachO::Sign(ZSignAsset *pSignAsset, bool bForce, string strBundleId, strin
 			}
 		}
 
-		if (!archo->Sign(pSignAsset, bForce, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResourcesData))
-		{
-			if (!archo->m_bEnoughSpace && !m_bCSRealloced)
-			{
-				m_bCSRealloced = true;
-				if (ReallocCodeSignSpace())
-				{
-					return Sign(pSignAsset, bForce, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResourcesData);
-				}
-			}
-			return false;
-		}
+		//if (!archo->Sign(pSignAsset, bForce, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResourcesData))
+		//{
+			//if (!archo->m_bEnoughSpace && !m_bCSRealloced)
+			//{
+				//m_bCSRealloced = true;
+				//if (ReallocCodeSignSpace())
+				//{
+					//return Sign(pSignAsset, bForce, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResourcesData);
+				//}
+			//}
+			//return false;
+		//}
 	}
 
 	return CloseFile();
