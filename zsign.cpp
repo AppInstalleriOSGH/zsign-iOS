@@ -31,5 +31,5 @@ const struct option options[] = {
 int zsign(int argc, char *argv[]) {
 	ZTimer gtimer;
 	gtimer.Print(">>> Done.");
-	return 0
+	return 0;
 }
