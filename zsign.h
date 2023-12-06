@@ -1,1 +1,1 @@
-int zsign(int argc, char *argv[]);
+extern "C" int zsign(int argc, char *argv[]);
