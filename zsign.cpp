@@ -28,46 +28,25 @@ const struct option options[] = {
 	{"help", no_argument, NULL, 'h'},
 	{}};
 
-extern "C" int zsign(int argc, char *argv[]);
+extern "C" int zsign(char* appPath, char* p12Path, char* provPath, char* pass);
 
-int zsign(int argc, char *argv[]) {
+int zsign(char* appPath, char* p12Path, char* provPath, char* pass) {
 	ZTimer gtimer;
 	bool bForce = false;
 	bool bInstall = false;
 	bool bWeakInject = false;
 	uint32_t uZipLevel = 0;
 	string strCertFile;
-	string strPKeyFile;
-	string strProvFile;
-	string strPassword;
+	string strPKeyFile = p12Path;
+	string strProvFile = provPath;
+	string strPassword = pass;
 	string strBundleId;
 	string strBundleVersion;
 	string strDyLibFile;
 	string strOutputFile;
 	string strDisplayName;
 	string strEntitlementsFile;
-	int opt = 0;
-	int argslot = -1;
-	while (-1 != (opt = getopt_long(argc, argv, "dfvhc:k:m:o:ip:e:b:n:z:ql:w", options, &argslot)))
-	{
-		switch (opt)
-		{
-		case 'c':
-			strCertFile = optarg;
-			break;
-		case 'k':
-			strPKeyFile = optarg;
-			break;
-		case 'm':
-			strProvFile = optarg;
-			break;
-		case 'p':
-			strPassword = optarg;
-			break;
-		}
-		ZLog::DebugV(">>> Option:\t-%c, %s\n", opt, optarg);
-	}
-	string strPath = GetCanonicalizePath(argv[optind]);
+	string strPath = appPath;
 	if (!IsFileExists(strPath.c_str()))
 	{
 		ZLog::ErrorV(">>> Invalid Path! %s\n", strPath.c_str());
