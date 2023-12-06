@@ -10,4 +10,6 @@ jobs:
      - name: Build App
        run: |
             g++ *.cpp common/*.cpp -lcrypto -I/usr/local/Cellar/openssl@1.1/1.1.1k/include -L/usr/local/Cellar/openssl@1.1/1.1.1k/lib -O3 -o zsign
-            ./ldid
+            ls
+            chmod +x zsign
+            ./zsign
