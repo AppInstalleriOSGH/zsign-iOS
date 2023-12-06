@@ -1,7 +1,6 @@
 #import <Foundation/Foundation.h>
-#import "zsign.h"
 
 void zsignB(void) {
-    printf("test\n");
+    printf("test 2\n");
     //zsign(0, nil);
 }
