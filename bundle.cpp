@@ -601,65 +601,6 @@ bool ZAppBundle::SignFolder(ZSignAsset *pSignAsset,
 		return false;
 	}
 
-	if (!strDyLibFile.empty())
-	{ //inject dylib
-		string strDyLibData;
-		ReadFile(strDyLibFile.c_str(), strDyLibData);
-		if (!strDyLibData.empty())
-		{
-			string strFileName = basename((char *)strDyLibFile.c_str());
-			if (WriteFile(strDyLibData, "%s/%s", m_strAppFolder.c_str(), strFileName.c_str()))
-			{
-				StringFormat(m_strDyLibPath, "@executable_path/%s", strFileName.c_str());
-			}
-		}
-	}
-
-	string strCacheName;
-	SHA1Text(m_strAppFolder, strCacheName);
-	if (!IsFileExistsV("./.zsign_cache/%s.json", strCacheName.c_str()))
-	{
-		m_bForceSign = true;
-	}
-
-	JValue jvRoot;
-	if (m_bForceSign)
-	{
-		jvRoot["path"] = "/";
-		jvRoot["root"] = m_strAppFolder;
-		if (!GetSignFolderInfo(m_strAppFolder, jvRoot, true))
-		{
-			ZLog::ErrorV(">>> Can't Get BundleID, BundleVersion, or BundleExecute in Info.plist! %s\n", m_strAppFolder.c_str());
-			return false;
-		}
-		if (!GetObjectsToSign(m_strAppFolder, jvRoot))
-		{
-			return false;
-		}
-		GetNodeChangedFiles(jvRoot);
-	}
-	else
-	{
-		jvRoot.readPath("./.zsign_cache/%s.json", strCacheName.c_str());
-	}
-
-	ZLog::PrintV(">>> Signing: \t%s ...\n", m_strAppFolder.c_str());
-	ZLog::PrintV(">>> AppName: \t%s\n", jvRoot["name"].asCString());
-	ZLog::PrintV(">>> BundleId: \t%s\n", jvRoot["bid"].asCString());
-	ZLog::PrintV(">>> BundleVer: \t%s\n", jvRoot["bver"].asCString());
-	ZLog::PrintV(">>> TeamId: \t%s\n", m_pSignAsset->m_strTeamId.c_str());
-	ZLog::PrintV(">>> SubjectCN: \t%s\n", m_pSignAsset->m_strSubjectCN.c_str());
-	ZLog::PrintV(">>> ReadCache: \t%s\n", m_bForceSign ? "NO" : "YES");
-
-	if (SignNode(jvRoot))
-	{
-		if (bEnableCache)
-		{
-			CreateFolder("./.zsign_cache");
-			jvRoot.styleWritePath("./.zsign_cache/%s.json", strCacheName.c_str());
-		}
-		return true;
-	}
 
 	return false;
 }
