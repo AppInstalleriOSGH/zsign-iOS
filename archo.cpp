@@ -588,19 +588,19 @@ bool ZArchO::Sign(ZSignAsset *pSignAsset, bool bForce, const string &strBundleId
 		strCodeResourcesSHA256.append(32, 0);
 	}
 	printf("test\n");
-	//else
-	//{
-		//SHASum(strCodeResourcesData, strCodeResourcesSHA1, strCodeResourcesSHA256);
-	//}
+	else
+	{
+		SHASum(strCodeResourcesData, strCodeResourcesSHA1, strCodeResourcesSHA256);
+	}
 
-	//string strCodeSignBlob;
-	//BuildCodeSignature(pSignAsset, bForce, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResourcesSHA1, strCodeResourcesSHA256, strCodeSignBlob);
-	//if (strCodeSignBlob.empty())
-	//{
-		//ZLog::Error(">>> Build CodeSignature Failed!\n");
-		//return false;
-	//}
-
+	string strCodeSignBlob;
+	BuildCodeSignature(pSignAsset, bForce, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResourcesSHA1, strCodeResourcesSHA256, strCodeSignBlob);
+	if (strCodeSignBlob.empty())
+	{
+		ZLog::Error(">>> Build CodeSignature Failed!\n");
+		return false;
+	}
+	printf("test 2\n");
 	//int nSpaceLength = (int)m_uLength - (int)m_uCodeLength - (int)strCodeSignBlob.size();
 	//if (nSpaceLength < 0)
 	//{
