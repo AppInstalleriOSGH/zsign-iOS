@@ -31,6 +31,7 @@ const struct option options[] = {
 extern "C" int zsign(int argc);
 
 int zsign(int argc) {
+	printf("wow!!!!!!\n");
 	ZTimer gtimer;
 	gtimer.Print(">>> Done.");
 	return 0;
