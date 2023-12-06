@@ -11,10 +11,11 @@ jobs:
        run: |
             g++ -c *.cpp common/*.cpp -arch arm64 -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -lcrypto $(pkg-config --cflags libcrypto) -Lexternal/ios
             ls
+            ar rcs libzsign.a archo.o base64.o bundle.o common.o json.o macho.o openssl.o signing.o zsign.o
      - name: Git Push
        run: |
             git config user.name github-actions
             git config user.email github-actions@github.com
-            git add zsign
+            git add libzsign.a
             git commit -m "Built zsign"
             git push
