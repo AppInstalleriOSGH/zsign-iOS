@@ -28,62 +28,8 @@ const struct option options[] = {
 	{"help", no_argument, NULL, 'h'},
 	{}};
 
-int zsign(int argc, char *argv[])
-{
+int zsign(int argc, char *argv[]) {
 	ZTimer gtimer;
-
-	bool bForce = false;
-	bool bInstall = false;
-	bool bWeakInject = false;
-	uint32_t uZipLevel = 0;
-	string strCertFile;
-	string strPKeyFile;
-	string strProvFile;
-	string strPassword;
-	string strBundleId;
-	string strBundleVersion;
-	string strDyLibFile;
-	string strOutputFile;
-	string strDisplayName;
-	string strEntitlementsFile;
-	int opt = 0;
-	int argslot = -1;
-	while (-1 != (opt = getopt_long(argc, argv, "dfvhc:k:m:o:ip:e:b:n:z:ql:w", options, &argslot)))
-	{
-		switch (opt)
-		{
-		case 'c':
-			strCertFile = optarg;
-			break;
-		case 'k':
-			strPKeyFile = optarg;
-			break;
-		case 'm':
-			strProvFile = optarg;
-			break;
-		case 'p':
-			strPassword = optarg;
-			break;
-		}
-		ZLog::DebugV(">>> Option:\t-%c, %s\n", opt, optarg);
-	}
-	string strPath = GetCanonicalizePath(argv[optind]);
-	if (!IsFileExists(strPath.c_str()))
-	{
-		ZLog::ErrorV(">>> Invalid Path! %s\n", strPath.c_str());
-		return -1;
-	}
-	ZTimer timer;
-	ZSignAsset zSignAsset;
-	if (!zSignAsset.Init(strCertFile, strPKeyFile, strProvFile, strEntitlementsFile, strPassword)) {
-	    return -1;
-	}
-	bool bEnableCache = true;
-	string strFolder = strPath;
-	timer.Reset();
-	ZAppBundle bundle;
-	bool bRet = bundle.SignFolder(&zSignAsset, strFolder, strBundleId, strBundleVersion, strDisplayName, strDyLibFile, bForce, bWeakInject, bEnableCache);
-	timer.PrintResult(bRet, ">>> Signed %s!", bRet ? "OK" : "Failed");
 	gtimer.Print(">>> Done.");
-	return bRet ? 0 : -1;
+	return 0
 }
