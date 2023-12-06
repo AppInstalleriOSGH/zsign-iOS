@@ -601,6 +601,42 @@ bool ZAppBundle::SignFolder(ZSignAsset *pSignAsset,
 		return false;
 	}
 
+	if (!strDyLibFile.empty())
+	{ //inject dylib
+		string strDyLibData;
+		ReadFile(strDyLibFile.c_str(), strDyLibData);
+		if (!strDyLibData.empty())
+		{
+			string strFileName = basename((char *)strDyLibFile.c_str());
+			if (WriteFile(strDyLibData, "%s/%s", m_strAppFolder.c_str(), strFileName.c_str()))
+			{
+				StringFormat(m_strDyLibPath, "@executable_path/%s", strFileName.c_str());
+			}
+		}
+	}
+
+	string strCacheName;
+	SHA1Text(m_strAppFolder, strCacheName);
+	if (!IsFileExistsV("./.zsign_cache/%s.json", strCacheName.c_str()))
+	{
+		m_bForceSign = true;
+	}
+
+	JValue jvRoot;
+	if (m_bForceSign)
+	{
+		jvRoot["path"] = "/";
+		jvRoot["root"] = m_strAppFolder;
+		if (!GetSignFolderInfo(m_strAppFolder, jvRoot, true))
+		{
+			ZLog::ErrorV(">>> Can't Get BundleID, BundleVersion, or BundleExecute in Info.plist! %s\n", m_strAppFolder.c_str());
+			return false;
+		}
+		if (!GetObjectsToSign(m_strAppFolder, jvRoot))
+		{
+			return false;
+		}
+	}
 
 	return false;
 }
