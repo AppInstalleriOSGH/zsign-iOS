@@ -3,6 +3,7 @@
 #include "openssl.h"
 #include "macho.h"
 #include "bundle.h"
+#include "zsign.h"
 #include <libgen.h>
 #include <dirent.h>
 #include <getopt.h>
@@ -28,7 +29,7 @@ const struct option options[] = {
 	{"help", no_argument, NULL, 'h'},
 	{}};
 
-extern int zsign(int argc, char *argv[]) {
+int zsign(int argc, char *argv[]) {
 	ZTimer gtimer;
 	gtimer.Print(">>> Done.");
 	return 0;
