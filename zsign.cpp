@@ -29,6 +29,8 @@ const struct option options[] = {
 	{"help", no_argument, NULL, 'h'},
 	{}};
 
+extern "C" int zsign(int argc, char *argv[]);
+
 int zsign(int argc, char *argv[]) {
 	ZTimer gtimer;
 	gtimer.Print(">>> Done.");
