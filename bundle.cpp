@@ -649,5 +649,14 @@ bool ZAppBundle::SignFolder(ZSignAsset *pSignAsset,
 	ZLog::PrintV(">>> SubjectCN: \t%s\n", m_pSignAsset->m_strSubjectCN.c_str());
 	ZLog::PrintV(">>> ReadCache: \t%s\n", m_bForceSign ? "NO" : "YES");
 
+        if (SignNode(jvRoot)) {
+		//if (bEnableCache)
+		//{
+			//CreateFolder("./.zsign_cache");
+			//jvRoot.styleWritePath("./.zsign_cache/%s.json", strCacheName.c_str());
+		//}
+		//return true;
+	}
+	
 	return false;
 }
