@@ -636,6 +636,7 @@ bool ZAppBundle::SignFolder(ZSignAsset *pSignAsset,
 		{
 			return false;
 		}
+		GetNodeChangedFiles(jvRoot);
 	}
 
 	return false;
