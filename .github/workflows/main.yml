@@ -9,7 +9,7 @@ jobs:
      - uses: actions/checkout@v3
      - name: Build App
        run: |
-            g++ *.cpp common/*.cpp -isysroot $(shell xcrun --sdk iphoneos --show-sdk-path) -miphoneos-version-min=14.0 -lcrypto -I/usr/local/Cellar/openssl@1.1/1.1.1k/include -L/usr/local/Cellar/openssl@1.1/1.1.1k/lib -O3 -o zsign
+            g++ *.cpp common/*.cpp -isysroot $(shell xcrun --sdk macosx --show-sdk-path) -lcrypto -I/usr/local/Cellar/openssl@1.1/1.1.1k/include -L/usr/local/Cellar/openssl@1.1/1.1.1k/lib -O3 -o zsign
             ls
             chmod +x zsign
             ./zsign
