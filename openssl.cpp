@@ -1,7 +1,4 @@
-#if OPENSSL_VERSION_NUMBER >= 0x30000000
 #include <openssl/provider.h>
-#endif
-
 #include "common/common.h"
 #include "common/base64.h"
 #include "openssl.h"
