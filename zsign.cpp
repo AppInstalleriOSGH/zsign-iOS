@@ -3,7 +3,7 @@
 #include "openssl.h"
 #include "macho.h"
 #include "bundle.h"
-#include "zsign.hpp"
+#include "zsign.h"
 #include <libgen.h>
 #include <dirent.h>
 #include <getopt.h>
