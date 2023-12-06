@@ -573,44 +573,44 @@ bool ZArchO::BuildCodeSignature(ZSignAsset *pSignAsset, bool bForce, const strin
 
 bool ZArchO::Sign(ZSignAsset *pSignAsset, bool bForce, const string &strBundleId, const string &strInfoPlistSHA1, const string &strInfoPlistSHA256, const string &strCodeResourcesData)
 {
-	if (NULL == m_pSignBase)
-	{
-		m_bEnoughSpace = false;
-		ZLog::Warn(">>> Can't Find CodeSignature Segment!\n");
-		return false;
-	}
+	//if (NULL == m_pSignBase)
+	//{
+		//m_bEnoughSpace = false;
+		//ZLog::Warn(">>> Can't Find CodeSignature Segment!\n");
+		//return false;
+	//}
 
-	string strCodeResourcesSHA1;
-	string strCodeResourcesSHA256;
-	if (strCodeResourcesData.empty())
-	{
-		strCodeResourcesSHA1.append(20, 0);
-		strCodeResourcesSHA256.append(32, 0);
-	}
-	else
-	{
-		SHASum(strCodeResourcesData, strCodeResourcesSHA1, strCodeResourcesSHA256);
-	}
+	//string strCodeResourcesSHA1;
+	//string strCodeResourcesSHA256;
+	//if (strCodeResourcesData.empty())
+	//{
+		//strCodeResourcesSHA1.append(20, 0);
+		//strCodeResourcesSHA256.append(32, 0);
+	//}
+	//else
+	//{
+		//SHASum(strCodeResourcesData, strCodeResourcesSHA1, strCodeResourcesSHA256);
+	//}
 
-	string strCodeSignBlob;
-	BuildCodeSignature(pSignAsset, bForce, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResourcesSHA1, strCodeResourcesSHA256, strCodeSignBlob);
-	if (strCodeSignBlob.empty())
-	{
-		ZLog::Error(">>> Build CodeSignature Failed!\n");
-		return false;
-	}
+	//string strCodeSignBlob;
+	//BuildCodeSignature(pSignAsset, bForce, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResourcesSHA1, strCodeResourcesSHA256, strCodeSignBlob);
+	//if (strCodeSignBlob.empty())
+	//{
+		//ZLog::Error(">>> Build CodeSignature Failed!\n");
+		//return false;
+	//}
 
-	int nSpaceLength = (int)m_uLength - (int)m_uCodeLength - (int)strCodeSignBlob.size();
-	if (nSpaceLength < 0)
-	{
-		m_bEnoughSpace = false;
-		ZLog::WarnV(">>> No Enough CodeSignature Space. Length => Now: %d, Need: %d\n", (int)m_uLength - (int)m_uCodeLength, (int)strCodeSignBlob.size());
-		return false;
-	}
+	//int nSpaceLength = (int)m_uLength - (int)m_uCodeLength - (int)strCodeSignBlob.size();
+	//if (nSpaceLength < 0)
+	//{
+		//m_bEnoughSpace = false;
+		//ZLog::WarnV(">>> No Enough CodeSignature Space. Length => Now: %d, Need: %d\n", (int)m_uLength - (int)m_uCodeLength, (int)strCodeSignBlob.size());
+		//return false;
+	//}
 
-	memcpy(m_pBase + m_uCodeLength, strCodeSignBlob.data(), strCodeSignBlob.size());
+	//memcpy(m_pBase + m_uCodeLength, strCodeSignBlob.data(), strCodeSignBlob.size());
 	//memset(m_pBase + m_uCodeLength + strCodeSignBlob.size(), 0, nSpaceLength);
-	return true;
+	return false;
 }
 
 uint32_t ZArchO::ReallocCodeSignSpace(const string &strNewFile)
