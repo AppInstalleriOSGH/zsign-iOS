@@ -60,9 +60,9 @@ int zsign(char* appPath, char* p12Path, char* provPath, char* pass) {
 	bool bEnableCache = true;
 	string strFolder = strPath;
 	timer.Reset();
-	ZAppBundle bundle;
-	bool bRet = bundle.SignFolder(&zSignAsset, strFolder, strBundleId, strBundleVersion, strDisplayName, strDyLibFile, bForce, bWeakInject, bEnableCache);
-	timer.PrintResult(bRet, ">>> Signed %s!", bRet ? "OK" : "Failed");
+	//ZAppBundle bundle;
+	//bool bRet = bundle.SignFolder(&zSignAsset, strFolder, strBundleId, strBundleVersion, strDisplayName, strDyLibFile, bForce, bWeakInject, bEnableCache);
+	//timer.PrintResult(bRet, ">>> Signed %s!", bRet ? "OK" : "Failed");
 	gtimer.Print(">>> Done.");
 	return bRet ? 0 : -1;
 }
