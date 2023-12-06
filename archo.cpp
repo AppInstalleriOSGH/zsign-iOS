@@ -592,24 +592,23 @@ bool ZArchO::Sign(ZSignAsset *pSignAsset, bool bForce, const string &strBundleId
 		SHASum(strCodeResourcesData, strCodeResourcesSHA1, strCodeResourcesSHA256);
 	}
 
-	//string strCodeSignBlob;
-	//BuildCodeSignature(pSignAsset, bForce, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResourcesSHA1, strCodeResourcesSHA256, strCodeSignBlob);
-	//if (strCodeSignBlob.empty())
-	//{
-		//ZLog::Error(">>> Build CodeSignature Failed!\n");
-		//return false;
-	//}
-	printf("test 2\n");
-	//int nSpaceLength = (int)m_uLength - (int)m_uCodeLength - (int)strCodeSignBlob.size();
-	//if (nSpaceLength < 0)
-	//{
-		//m_bEnoughSpace = false;
-		//ZLog::WarnV(">>> No Enough CodeSignature Space. Length => Now: %d, Need: %d\n", (int)m_uLength - (int)m_uCodeLength, (int)strCodeSignBlob.size());
-		//return false;
-	//}
+	string strCodeSignBlob;
+	BuildCodeSignature(pSignAsset, bForce, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResourcesSHA1, strCodeResourcesSHA256, strCodeSignBlob);
+	if (strCodeSignBlob.empty())
+	{
+		ZLog::Error(">>> Build CodeSignature Failed!\n");
+		return false;
+	}
+	int nSpaceLength = (int)m_uLength - (int)m_uCodeLength - (int)strCodeSignBlob.size();
+	if (nSpaceLength < 0)
+	{
+		m_bEnoughSpace = false;
+		ZLog::WarnV(">>> No Enough CodeSignature Space. Length => Now: %d, Need: %d\n", (int)m_uLength - (int)m_uCodeLength, (int)strCodeSignBlob.size());
+		return false;
+	}
 
-	//memcpy(m_pBase + m_uCodeLength, strCodeSignBlob.data(), strCodeSignBlob.size());
-	//memset(m_pBase + m_uCodeLength + strCodeSignBlob.size(), 0, nSpaceLength);
+	memcpy(m_pBase + m_uCodeLength, strCodeSignBlob.data(), strCodeSignBlob.size());
+	memset(m_pBase + m_uCodeLength + strCodeSignBlob.size(), 0, nSpaceLength);
 	return true;
 }
 
