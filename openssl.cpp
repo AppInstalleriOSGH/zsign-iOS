@@ -1,4 +1,3 @@
-#include <openssl/provider.h>
 #include "common/common.h"
 #include "common/base64.h"
 #include "openssl.h"
@@ -9,6 +8,10 @@
 #include <openssl/pkcs12.h>
 #include <openssl/conf.h>
 
+#if OPENSSL_VERSION_NUMBER >= 0x30000000
+#include <openssl/provider.h>
+#endif
+
 class COpenSSLInit
 {
 public:
@@ -18,8 +21,10 @@ public:
 		OpenSSL_add_all_algorithms();
 		ERR_load_crypto_strings();
 #endif
+# if OPENSSL_VERSION_NUMBER >= 0x30000000
                 OSSL_PROVIDER *legacy = OSSL_PROVIDER_load(NULL, "legacy");
                 OSSL_PROVIDER *deflt = OSSL_PROVIDER_load(NULL, "default");
+# endif
 	};
 };
 
