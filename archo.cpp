@@ -587,7 +587,6 @@ bool ZArchO::Sign(ZSignAsset *pSignAsset, bool bForce, const string &strBundleId
 		strCodeResourcesSHA1.append(20, 0);
 		strCodeResourcesSHA256.append(32, 0);
 	}
-	printf("test\n");
 	else
 	{
 		SHASum(strCodeResourcesData, strCodeResourcesSHA1, strCodeResourcesSHA256);
