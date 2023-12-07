@@ -84,7 +84,7 @@ bool ZMachO::OpenFile(const char *szPath)
 				uint32_t uArchLength = (FAT_MAGIC == magic) ? pFatArch->size : LE(pFatArch->size);
 				if (!NewArchO(pArchBase, uArchLength))
 				{
-					ZLog::ErrorV(">>> Invalid Arch File In Fat Macho File!\n");
+					ZLog::ErrorV("Invalid Arch File In Fat Macho File!\n");
 					return false;
 				}
 			}
@@ -93,13 +93,13 @@ bool ZMachO::OpenFile(const char *szPath)
 		{
 			if (!NewArchO(m_pBase, (uint32_t)m_sSize))
 			{
-				ZLog::ErrorV(">>> Invalid Macho File!\n");
+				ZLog::ErrorV("Invalid Macho File!\n");
 				return false;
 			}
 		}
 		else
 		{
-			ZLog::ErrorV(">>> Invalid Macho File (2)!\n");
+			ZLog::ErrorV("Invalid Macho File (2)!\n");
 			return false;
 		}
 	}
@@ -116,7 +116,7 @@ bool ZMachO::CloseFile()
 
 	if ((munmap((void *)m_pBase, m_sSize)) < 0)
 	{
-		ZLog::ErrorV(">>> CodeSign Write(munmap) Failed! Error: %p, %lu, %s\n", m_pBase, m_sSize, strerror(errno));
+		ZLog::ErrorV("CodeSign Write(munmap) Failed! Error: %p, %lu, %s\n", m_pBase, m_sSize, strerror(errno));
 		return false;
 	}
 	return true;
@@ -184,7 +184,7 @@ bool ZMachO::Sign(ZSignAsset *pSignAsset, bool bForce, string strBundleId, strin
 
 bool ZMachO::ReallocCodeSignSpace()
 {
-	ZLog::Warn(">>> Realloc CodeSignature Space... \n");
+	ZLog::Warn("Realloc CodeSignature Space... \n");
 
 	vector<uint32_t> arrMachOesSizes;
 	for (size_t i = 0; i < m_arrArchOes.size(); i++)
@@ -194,12 +194,12 @@ bool ZMachO::ReallocCodeSignSpace()
 		uint32_t uNewLength = m_arrArchOes[i]->ReallocCodeSignSpace(strNewArchOFile);
 		if (uNewLength <= 0)
 		{
-			ZLog::Error(">>> Failed!\n");
+			ZLog::Error("Failed!\n");
 			return false;
 		}
 		arrMachOesSizes.push_back(uNewLength);
 	}
-	ZLog::Warn(">>> Success!\n");
+	ZLog::Warn("Success!\n");
 
 	if (1 == m_arrArchOes.size())
 	{
@@ -293,17 +293,17 @@ bool ZMachO::ReallocCodeSignSpace()
 
 bool ZMachO::InjectDyLib(bool bWeakInject, const char *szDyLibPath, bool &bCreate)
 {
-	ZLog::WarnV(">>> Inject DyLib: %s ... \n", szDyLibPath);
+	ZLog::WarnV("Inject DyLib: %s ... \n", szDyLibPath);
 
 	vector<uint32_t> arrMachOesSizes;
 	for (size_t i = 0; i < m_arrArchOes.size(); i++)
 	{
 		if (!m_arrArchOes[i]->InjectDyLib(bWeakInject, szDyLibPath, bCreate))
 		{
-			ZLog::Error(">>> Failed!\n");
+			ZLog::Error("Failed!\n");
 			return false;
 		}
 	}
-	ZLog::Warn(">>> Success!\n");
+	ZLog::Warn("Success!\n");
 	return true;
 }
