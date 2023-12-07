@@ -4,17 +4,17 @@
 #include "macho.h"
 #include "bundle.h"
 
-extern "C" int zsign(char* appPath, char* p12Path, char* provPath, char* pass, char* bundleID, char* bundleVersion, char* displayName);
+extern "C" int zsign(char* appPath, char* p12Path, char* provPath, char* pass, char* bundleID, char* bundleVersion, char* displayName, char* tweakDylib);
 
-int zsign(char* appPath, char* p12Path, char* provPath, char* pass, char* bundleID, char* bundleVersion, char* displayName) {
+int zsign(char* appPath, char* p12Path, char* provPath, char* pass, char* bundleID, char* bundleVersion, char* displayName, char* tweakDylib) {
     bool bForce = false;
-    bool bWeakInject = false;
+    bool bWeakInject = !tweakDylib.empty();
     if (!IsFileExists(appPath)) {
         ZLog::ErrorV(">>> Invalid Path! %s\n", appPath);
         return -1;
     }
     ZSignAsset zSignAsset;
-    if (!zSignAsset.Init("", p12Path, provPath, "", pass)) {
+    if (!zSignAsset.Init("", p12Path, provPath, tweakDylib, pass)) {
         return -1;
     }
     bool bEnableCache = true;
