@@ -434,10 +434,12 @@ bool ZAppBundle::SignNode(JValue &jvNode)
 	{ //inject dylib
 		macho.InjectDyLib(m_bWeakInject, m_strDyLibPath.c_str(), bForceSign);
 	}
-        if (!macho.Sign(m_pSignAsset, bForceSign, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResData))
+
+	if (!macho.Sign(m_pSignAsset, bForceSign, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResData))
 	{
 		return false;
 	}
+
 	return true;
 }
 
@@ -635,10 +637,12 @@ bool ZAppBundle::SignFolder(ZSignAsset *pSignAsset,
 			return false;
 		}
 		GetNodeChangedFiles(jvRoot);
-	} else {
-	    jvRoot.readPath("./.zsign_cache/%s.json", strCacheName.c_str());
 	}
-	
+	else
+	{
+		jvRoot.readPath("./.zsign_cache/%s.json", strCacheName.c_str());
+	}
+
 	ZLog::PrintV(">>> Signing: \t%s ...\n", m_strAppFolder.c_str());
 	ZLog::PrintV(">>> AppName: \t%s\n", jvRoot["name"].asCString());
 	ZLog::PrintV(">>> BundleId: \t%s\n", jvRoot["bid"].asCString());
@@ -647,14 +651,15 @@ bool ZAppBundle::SignFolder(ZSignAsset *pSignAsset,
 	ZLog::PrintV(">>> SubjectCN: \t%s\n", m_pSignAsset->m_strSubjectCN.c_str());
 	ZLog::PrintV(">>> ReadCache: \t%s\n", m_bForceSign ? "NO" : "YES");
 
-        if (SignNode(jvRoot)) {
-		//if (bEnableCache)
-		//{
-			//CreateFolder("./.zsign_cache");
-			//jvRoot.styleWritePath("./.zsign_cache/%s.json", strCacheName.c_str());
-		//}
-		//return true;
+	if (SignNode(jvRoot))
+	{
+		if (bEnableCache)
+		{
+			CreateFolder("./.zsign_cache");
+			jvRoot.styleWritePath("./.zsign_cache/%s.json", strCacheName.c_str());
+		}
+		return true;
 	}
-	
+
 	return false;
 }
