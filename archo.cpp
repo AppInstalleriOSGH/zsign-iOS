@@ -274,7 +274,7 @@ void ZArchO::PrintInfo()
 	}
 
 	ZLog::Print("------------------------------------------------------------------\n");
-	ZLog::Print(">>> MachO Info: \n");
+	ZLog::Print("MachO Info: \n");
 	ZLog::PrintV("\tFileType: \t%s\n", GetFileType(BO(m_pHeader->filetype)));
 	ZLog::PrintV("\tTotalSize: \t%u (%s)\n", m_uLength, FormatSize(m_uLength).c_str());
 	ZLog::PrintV("\tPlatform: \t%u\n", m_b64 ? 64 : 32);
@@ -341,7 +341,7 @@ void ZArchO::PrintInfo()
 
 	if (!m_strInfoPlist.empty())
 	{
-		ZLog::Print("\n>>> Embedded Info.plist: \n");
+		ZLog::Print("\nEmbedded Info.plist: \n");
 		ZLog::PrintV("\tlength: \t%lu\n", m_strInfoPlist.size());
 
 		string strInfoPlist = m_strInfoPlist;
@@ -354,7 +354,7 @@ void ZArchO::PrintInfo()
 
 	if (NULL == m_pSignBase || m_uSignLength <= 0)
 	{
-		ZLog::Warn(">>> Can't Find CodeSignature Segment!\n");
+		ZLog::Warn("Can't Find CodeSignature Segment!\n");
 	}
 	else
 	{
@@ -576,7 +576,7 @@ bool ZArchO::Sign(ZSignAsset *pSignAsset, bool bForce, const string &strBundleId
 	if (NULL == m_pSignBase)
 	{
 		m_bEnoughSpace = false;
-		ZLog::Warn(">>> Can't Find CodeSignature Segment!\n");
+		ZLog::Warn("Can't Find CodeSignature Segment!\n");
 		return false;
 	}
 
@@ -596,7 +596,7 @@ bool ZArchO::Sign(ZSignAsset *pSignAsset, bool bForce, const string &strBundleId
 	BuildCodeSignature(pSignAsset, bForce, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResourcesSHA1, strCodeResourcesSHA256, strCodeSignBlob);
 	if (strCodeSignBlob.empty())
 	{
-		ZLog::Error(">>> Build CodeSignature Failed!\n");
+		ZLog::Error("Build CodeSignature Failed!\n");
 		return false;
 	}
 
@@ -604,7 +604,7 @@ bool ZArchO::Sign(ZSignAsset *pSignAsset, bool bForce, const string &strBundleId
 	if (nSpaceLength < 0)
 	{
 		m_bEnoughSpace = false;
-		ZLog::WarnV(">>> No Enough CodeSignature Space. Length => Now: %d, Need: %d\n", (int)m_uLength - (int)m_uCodeLength, (int)strCodeSignBlob.size());
+		ZLog::WarnV("No Enough CodeSignature Space. Length => Now: %d, Need: %d\n", (int)m_uLength - (int)m_uCodeLength, (int)strCodeSignBlob.size());
 		return false;
 	}
 
@@ -651,7 +651,7 @@ uint32_t ZArchO::ReallocCodeSignSpace(const string &strNewFile)
 	{
 		if (m_uLoadCommandsFreeSpace < 4)
 		{
-			ZLog::Error(">>> Can't Find Free Space Of LoadCommands For CodeSignature!\n");
+			ZLog::Error("Can't Find Free Space Of LoadCommands For CodeSignature!\n");
 			return 0;
 		}
 
@@ -701,11 +701,11 @@ bool ZArchO::InjectDyLib(bool bWeakInject, const char *szDyLibPath, bool &bCreat
 				if ((bWeakInject && (LC_LOAD_WEAK_DYLIB != uLoadType)) || (!bWeakInject && (LC_LOAD_DYLIB != uLoadType)))
 				{
 					dlc->cmd = BO((uint32_t)(bWeakInject ? LC_LOAD_WEAK_DYLIB : LC_LOAD_DYLIB));
-					ZLog::WarnV(">>> DyLib Load Type Changed! %s -> %s\n", (LC_LOAD_DYLIB == uLoadType) ? "LC_LOAD_DYLIB" : "LC_LOAD_WEAK_DYLIB", bWeakInject ? "LC_LOAD_WEAK_DYLIB" : "LC_LOAD_DYLIB");
+					ZLog::WarnV("DyLib Load Type Changed! %s -> %s\n", (LC_LOAD_DYLIB == uLoadType) ? "LC_LOAD_DYLIB" : "LC_LOAD_WEAK_DYLIB", bWeakInject ? "LC_LOAD_WEAK_DYLIB" : "LC_LOAD_DYLIB");
 				}
 				else
 				{
-					ZLog::WarnV(">>> DyLib Is Already Existed! %s\n");
+					ZLog::WarnV("DyLib Is Already Existed! %s\n");
 				}
 				return true;
 			}
@@ -718,7 +718,7 @@ bool ZArchO::InjectDyLib(bool bWeakInject, const char *szDyLibPath, bool &bCreat
 	uint32_t uDyLibCommandSize = sizeof(dylib_command) + uDylibPathLength + uDylibPathPadding;
 	if (m_uLoadCommandsFreeSpace > 0 && m_uLoadCommandsFreeSpace < uDyLibCommandSize) // some bin doesn't have '__text'
 	{
-		ZLog::Error(">>> Can't Find Free Space Of LoadCommands For LC_LOAD_DYLIB Or LC_LOAD_WEAK_DYLIB!\n");
+		ZLog::Error("Can't Find Free Space Of LoadCommands For LC_LOAD_DYLIB Or LC_LOAD_WEAK_DYLIB!\n");
 		return false;
 	}
 
