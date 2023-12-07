@@ -14,11 +14,11 @@ int zsign(char* appPath, char* p12Path, char* provPath, char* pass, char* bundle
         return -1;
     }
     ZSignAsset zSignAsset;
-    if (!zSignAsset.Init("", p12Path, provPath, tweakDylib, pass)) {
+    if (!zSignAsset.Init("", p12Path, provPath, "", pass)) {
         return -1;
     }
     bool bEnableCache = true;
     ZAppBundle bundle;
-    bool bRet = bundle.SignFolder(&zSignAsset, appPath, bundleID, bundleVersion, displayName, "", bForce, bWeakInject, bEnableCache);
+    bool bRet = bundle.SignFolder(&zSignAsset, appPath, bundleID, bundleVersion, displayName, tweakDylib, bForce, bWeakInject, bEnableCache);
     return bRet ? 0 : 1;
 }
