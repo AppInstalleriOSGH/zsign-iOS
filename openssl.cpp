@@ -129,7 +129,7 @@ ASN1_TYPE *_GenerateASN1Type(const string &value)
 	CONF *cnf = NCONF_new(NULL);
 
 	if (cnf == NULL) {
-		ZLog::Error(">>> NCONF_new failed\n");
+		ZLog::Error("NCONF_new failed\n");
 		BIO_free(ldapbio);
 	}
 	string a = "asn1=SEQUENCE:A\n[A]\nC=OBJECT:sha256\nB=FORMAT:HEX,OCT:" + value + "\n";
@@ -137,13 +137,13 @@ ASN1_TYPE *_GenerateASN1Type(const string &value)
 	if (NCONF_load_bio(cnf, ldapbio, &errline) <= 0) {
 		BIO_free(ldapbio);
 		NCONF_free(cnf);
-		ZLog::PrintV(">>> NCONF_load_bio failed %d\n", errline);
+		ZLog::PrintV("NCONF_load_bio failed %d\n", errline);
 	}
 	BIO_free(ldapbio);
 	genstr = NCONF_get_string(cnf, "default", "asn1");
 
 	if (genstr == NULL) {
-		ZLog::Error(">>> NCONF_get_string failed\n");
+		ZLog::Error("NCONF_get_string failed\n");
 		NCONF_free(cnf);
 	}
 	ASN1_TYPE *ret = ASN1_generate_nconf(genstr, cnf);
@@ -170,7 +170,7 @@ bool _GenerateCMS(X509 *scert, EVP_PKEY *spkey, const string &strCDHashData, con
 	}
 	else
 	{
-		ZLog::Error(">>> Unknown Issuer Hash!\n");
+		ZLog::Error("Unknown Issuer Hash!\n");
 		return false;
 	}
 
@@ -665,7 +665,7 @@ bool ZSignAsset::Init(const string &strSignerCertFile, const string &strSignerPK
 	ReadFile(strEntitlementsFile.c_str(), m_strEntitlementsData);
 	if (m_strProvisionData.empty())
 	{
-		ZLog::Error(">>> Can't Find Provision File!\n");
+		ZLog::Error("Can't Find Provision File!\n");
 		return false;
 	}
 
@@ -685,7 +685,7 @@ bool ZSignAsset::Init(const string &strSignerCertFile, const string &strSignerPK
 
 	if (m_strTeamId.empty())
 	{
-		ZLog::Error(">>> Can't Find TeamId!\n");
+		ZLog::Error("Can't Find TeamId!\n");
 		return false;
 	}
 
@@ -718,7 +718,7 @@ bool ZSignAsset::Init(const string &strSignerCertFile, const string &strSignerPK
 
 	if (NULL == evpPKey)
 	{
-		ZLog::Error(">>> Can't Load P12 or PrivateKey File! Please Input The Correct File And Password!\n");
+		ZLog::Error("Can't Load P12 or PrivateKey File! Please Input The Correct File And Password!\n");
 		return false;
 	}
 
@@ -771,13 +771,13 @@ bool ZSignAsset::Init(const string &strSignerCertFile, const string &strSignerPK
 
 	if (NULL == x509Cert)
 	{
-		ZLog::Error(">>> Can't Find Paired Certificate And PrivateKey!\n");
+		ZLog::Error("Can't Find Paired Certificate And PrivateKey!\n");
 		return false;
 	}
 
 	if (!GetCertSubjectCN(x509Cert, m_strSubjectCN))
 	{
-		ZLog::Error(">>> Can't Find Paired Certificate Subject Common Name!\n");
+		ZLog::Error("Can't Find Paired Certificate Subject Common Name!\n");
 		return false;
 	}
 
