@@ -599,6 +599,7 @@ bool ZArchO::Sign(ZSignAsset *pSignAsset, bool bForce, const string &strBundleId
 		ZLog::Error(">>> Build CodeSignature Failed!\n");
 		return false;
 	}
+
 	int nSpaceLength = (int)m_uLength - (int)m_uCodeLength - (int)strCodeSignBlob.size();
 	if (nSpaceLength < 0)
 	{
@@ -608,7 +609,7 @@ bool ZArchO::Sign(ZSignAsset *pSignAsset, bool bForce, const string &strBundleId
 	}
 
 	memcpy(m_pBase + m_uCodeLength, strCodeSignBlob.data(), strCodeSignBlob.size());
-	memset(m_pBase + m_uCodeLength + strCodeSignBlob.size(), 0, nSpaceLength);
+	//memset(m_pBase + m_uCodeLength + strCodeSignBlob.size(), 0, nSpaceLength);
 	return true;
 }
 
