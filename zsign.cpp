@@ -4,9 +4,9 @@
 #include "macho.h"
 #include "bundle.h"
 
-extern "C" int zsign(char* appPath, char* p12Path, char* provPath, char* pass);
+extern "C" int zsign(char* appPath, char* p12Path, char* provPath, char* pass, char* bundleID, char* bundleVersion, char* displayName);
 
-int zsign(char* appPath, char* p12Path, char* provPath, char* pass) {
+int zsign(char* appPath, char* p12Path, char* provPath, char* pass, char* bundleID, char* bundleVersion, char* displayName) {
     bool bForce = false;
     bool bWeakInject = false;
     if (!IsFileExists(appPath)) {
@@ -19,6 +19,6 @@ int zsign(char* appPath, char* p12Path, char* provPath, char* pass) {
     }
     bool bEnableCache = true;
     ZAppBundle bundle;
-    bool bRet = bundle.SignFolder(&zSignAsset, appPath, "", "", "", "", bForce, bWeakInject, bEnableCache);
-    return 0;
+    bool bRet = bundle.SignFolder(&zSignAsset, appPath, bundleID, bundleVersion, displayName, "", bForce, bWeakInject, bEnableCache);
+    return bRet ? 0 : 1;
 }
