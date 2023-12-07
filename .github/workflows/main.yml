@@ -9,7 +9,7 @@ jobs:
      - uses: actions/checkout@v3
      - name: Build ZSign
        run: |
-            clang++ -c *.cpp common/*.cpp -arch arm64 -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -lcrypto $(pkg-config --cflags libcrypto) -Lexternal/ios -lstdc++
+            clang++ -c *.cpp common/*.cpp -arch arm64 -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -lcrypto $(pkg-config --cflags libcrypto) -Llib -lstdc++
             ar rcs libzsign.a archo.o base64.o bundle.o common.o json.o macho.o openssl.o signing.o zsign.o
      - name: Git Push
        run: |
