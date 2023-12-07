@@ -164,6 +164,7 @@ bool ZMachO::Sign(ZSignAsset *pSignAsset, bool bForce, string strBundleId, strin
 				SHASum(archo->m_strInfoPlist, strInfoPlistSHA1, strInfoPlistSHA256);
 			}
 		}
+
 		if (!archo->Sign(pSignAsset, bForce, strBundleId, strInfoPlistSHA1, strInfoPlistSHA256, strCodeResourcesData))
 		{
 			if (!archo->m_bEnoughSpace && !m_bCSRealloced)
