@@ -5,7 +5,7 @@ extern "C" int zsign(char* appPath, char* p12Path, char* provPath, char* pass, c
 
 int zsign(char* appPath, char* p12Path, char* provPath, char* pass, char* bundleID, char* bundleVersion, char* displayName, char* tweakDylib) {
     if (!IsFileExists(appPath)) {
-        ZLog::ErrorV(">>> Invalid Path! %s\n", appPath);
+        ZLog::ErrorV("Invalid Path! %s\n", appPath);
         return -1;
     }
     ZSignAsset zSignAsset;
