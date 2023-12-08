@@ -14,5 +14,5 @@ int zsign(char* appPath, char* p12Path, char* provPath, char* pass, char* bundle
     }
     ZAppBundle bundle;
     bool bRet = bundle.SignFolder(&zSignAsset, appPath, bundleID, bundleVersion, displayName, tweakDylib, false, true, true);
-    return bRet ? 0 : 1;
+    return bRet ? 0 : -1;
 }
