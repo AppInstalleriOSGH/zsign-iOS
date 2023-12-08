@@ -12,3 +12,7 @@ If you want to use ZSign in an iOS app add libzsign.a and lib/libcrypto.a to you
 ```
 int zsign(char* appPath, char* p12Path, char* provPath, char* pass, char* bundleID, char* bundleVersion, char* displayName, char* tweakDylib);
 ```
+
+## Credits
+
+[@zhlynn](https://github.com/zhlynn) - ZSign
