@@ -1,13 +1,13 @@
-# ZSign-iOS
+# zsign iOS
 
-To build the ZSign static library run these commands.
+To build the zsign static library run these commands.
 
 ```
 clang++ -c *.cpp common/*.cpp -arch arm64 -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -lcrypto $(pkg-config --cflags libcrypto) -Llib -lstdc++
 ar rcs libzsign.a archo.o base64.o bundle.o common.o json.o macho.o openssl.o signing.o zsign.o
 ```
 
-If you want to use ZSign in an iOS app add libzsign.a and lib/libcrypto.a to your Xcode Project as static libraries then add this code to your header file. You'll also need to link stdc++ to your Xcode Project.
+To use zsign in an iOS app add libzsign.a and lib/libcrypto.a to your Xcode Project as static libraries then add this code to your header file. You'll also need to link stdc++ to your Xcode Project.
 
 ```
 int zsign(char* appPath, char* p12Path, char* provPath, char* pass, char* bundleID, char* bundleVersion, char* displayName, char* tweakDylib);
@@ -15,4 +15,4 @@ int zsign(char* appPath, char* p12Path, char* provPath, char* pass, char* bundle
 
 ## Credits
 
-[@zhlynn](https://github.com/zhlynn) - ZSign
+[@zhlynn](https://github.com/zhlynn) - zsign
