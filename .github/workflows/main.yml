@@ -1,20 +1,20 @@
-name: Build ZSign
+name: Build zsign
 on:
   push:
   workflow_dispatch:
 jobs:
-  Build-ZSign:
+  Build-zsign:
     runs-on: macos-latest
     steps:
      - uses: actions/checkout@v3
-     - name: Build ZSign
+     - name: Build zsign
        run: |
-            clang++ -c *.cpp common/*.cpp -arch arm64 -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -lcrypto $(pkg-config --cflags libcrypto) -Llib -lstdc++
+            clang++ -c *.cpp common/*.cpp -arch arm64 -isysroot $(xcrun --sdk iphoneos --show-sdk-path) $(pkg-config --cflags libcrypto) -Llib -lcrypto -lstdc++
             ar rcs libzsign.a archo.o base64.o bundle.o common.o json.o macho.o openssl.o signing.o zsign.o
      - name: Git Push
        run: |
             git config user.name github-actions
             git config user.email github-actions@github.com
             git add libzsign.a
-            git commit -m "Built ZSign"
+            git commit -m "Built zsign"
             git push
