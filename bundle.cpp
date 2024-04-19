@@ -64,6 +64,7 @@ bool ZAppBundle::FindAppFolder(const string &strFolder, string &strAppFolder)
 
 bool ZAppBundle::GetSignFolderInfo(const string &strFolder, JValue &jvNode, bool bGetName)
 {
+	ZLog::PrintV("GetSignFolderInfo In Folder: \t%s ...\n", strFolder.c_str());
 	JValue jvInfo;
 	string strInfoPlistData;
 	string strInfoPlistPath = strFolder + "/Info.plist";
@@ -102,6 +103,7 @@ bool ZAppBundle::GetSignFolderInfo(const string &strFolder, JValue &jvNode, bool
 
 bool ZAppBundle::GetObjectsToSign(const string &strFolder, JValue &jvInfo)
 {
+	ZLog::PrintV("GetObjectsToSign In Folder: \t%s ...\n", strFolder.c_str());
 	DIR *dir = opendir(strFolder.c_str());
 	if (NULL != dir)
 	{
